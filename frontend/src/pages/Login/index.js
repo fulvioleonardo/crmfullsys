@@ -113,7 +113,7 @@ const Login = () => {
           <p>
             Copyright ©{" "}
             <a href={"#"} target={"_blank"}>
-              Z1{""}
+              FULLSYSCRM{""}
             </a>{" "}
             2024{" "}
           </p>
@@ -212,18 +212,44 @@ const Login = () => {
           </form>
           <div className={"container-footer-form"}>
             <p>
-            Al continuar, aceptas nuestros{" "}
+              Al continuar, aceptas nuestros{" "}
               <a className={"termo"} href={"/term"} target={"_blank"}>
-              Términos de servicio{""}
+                Términos de servicio{""}
               </a>{" "}
               y{" "}
               <a className={"politica"} href={"/privacy"} target={"_blank"}>
-              Política de Privacidad
+                Política de Privacidad
               </a>
             </p>
           </div>
         </div>
       </div>
+      {/* WhatsApp floating button */}
+      <a
+        href="https://wa.me/?text=ESTOY%20INTERESADO%20EN%20ADQUIRIR%20EL%20SISTEMA%20demo.fullsys.site"
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{
+          position: "fixed",
+          bottom: "20px",
+          right: "20px",
+          backgroundColor: "#25D366",
+          color: "white",
+          borderRadius: "50%",
+          width: "60px",
+          height: "60px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+          zIndex: 1000,
+        }}
+      >
+        <i
+          className="fa fa-whatsapp"
+          style={{ fontSize: "30px", color: "white" }}
+        ></i>
+      </a>
     </div>
   );
 };
