@@ -16,52 +16,61 @@ import { AuthContext } from "../../context/Auth/AuthContext";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
+    flexDirection: "column",
     alignItems: "center",
-    padding: theme.padding,
+    padding: theme.spacing(3),
+    backgroundColor: "#f5f5f5",
+    minHeight: "100vh",
   },
-
   paper: {
-    padding: theme.padding,
+    padding: theme.spacing(3),
     display: "flex",
     alignItems: "center",
+    justifyContent: "space-between",
+    width: "100%",
+    maxWidth: "600px",
+    marginBottom: theme.spacing(2),
+    backgroundColor: "#ffffff",
+    boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
   },
-
-  settingOption: {
+  titulo: {
+    marginBottom: theme.spacing(2),
+    fontWeight: "bold",
+    color: "#333",
+  },
+  opcionConfiguracion: {
     marginLeft: "auto",
-  },
-  margin: {
-    // margin: theme.spacing(1),
-    margin: theme.padding,
+    minWidth: "150px",
   },
 }));
 
-const Settings = () => {
+const Configuraciones = () => {
   const classes = useStyles();
 
-  const [settings, setSettings] = useState([]);
+  const [configuraciones, setConfiguraciones] = useState([]);
 
   useEffect(() => {
-    const fetchSession = async () => {
+    const obtenerConfiguraciones = async () => {
       try {
         const { data } = await api.get("/settings");
-        setSettings(data);
+        setConfiguraciones(data);
       } catch (err) {
         toastError(err);
       }
     };
-    fetchSession();
+    obtenerConfiguraciones();
   }, []);
 
   useEffect(() => {
-    const companyId = user.companyId;
-    const socket = socketConnection({ companyId, userId: user.id });
+    const { companyId, id: userId } = useContext(AuthContext).user;
+    const socket = socketConnection({ companyId, userId });
 
     socket.on(`company-${companyId}-settings`, (data) => {
       if (data.action === "update") {
-        setSettings((prevState) => {
+        setConfiguraciones((prevState) => {
           const aux = [...prevState];
-          const settingIndex = aux.findIndex((s) => s.key === data.setting.key);
-          aux[settingIndex].value = data.setting.value;
+          const indice = aux.findIndex((s) => s.key === data.setting.key);
+          aux[indice].value = data.setting.value;
           return aux;
         });
       }
@@ -72,58 +81,52 @@ const Settings = () => {
     };
   }, []);
 
-  const handleChangeSetting = async (e) => {
-    const selectedValue = e.target.value;
-    const settingKey = e.target.name;
+  const manejarCambioConfiguracion = async (e) => {
+    const valorSeleccionado = e.target.value;
+    const claveConfiguracion = e.target.name;
 
     try {
-      await api.put(`/settings/${settingKey}`, {
-        value: selectedValue,
+      await api.put(`/settings/${claveConfiguracion}`, {
+        value: valorSeleccionado,
       });
-      toast.success(i18n.t("settings.success"));
+      toast.success("Configuración actualizada con éxito");
     } catch (err) {
       toastError(err);
     }
   };
 
-  const getSettingValue = (key) => {
-    const { value } = settings.find((s) => s.key === key);
-    return value;
+  const obtenerValorConfiguracion = (clave) => {
+    const configuracion = configuraciones.find((s) => s.key === clave);
+    return configuracion ? configuracion.value : "";
   };
 
   return (
     <div className={classes.root}>
-      <Container className={classes.container} maxWidth="sm">
-        <Typography variant="body2" gutterBottom>
-          {i18n.t("settings.title")}
+      <Typography variant="h5" className={classes.titulo}>
+        Configuraciones
+      </Typography>
+      <Paper className={classes.paper}>
+        <Typography variant="body1">
+          Permitir creación de usuarios
         </Typography>
-        <Paper className={classes.paper}>
-          <Typography variant="body1">
-            {i18n.t("settings.settings.userCreation.name")}
-          </Typography>
-          <Select
-            margin="dense"
-            variant="outlined"
-            native
-            id="userCreation-setting"
-            name="userCreation"
-            value={
-              settings && settings.length > 0 && getSettingValue("userCreation")
-            }
-            className={classes.settingOption}
-            onChange={handleChangeSetting}
-          >
-            <option value="enabled">
-              {i18n.t("settings.settings.userCreation.options.enabled")}
-            </option>
-            <option value="disabled">
-              {i18n.t("settings.settings.userCreation.options.disabled")}
-            </option>
-          </Select>
-        </Paper>
-      </Container>
+        <Select
+          margin="dense"
+          variant="outlined"
+          native
+          id="configuracion-creacion-usuarios"
+          name="userCreation"
+          value={
+            configuraciones.length > 0 && obtenerValorConfiguracion("userCreation")
+          }
+          className={classes.opcionConfiguracion}
+          onChange={manejarCambioConfiguracion}
+        >
+          <option value="enabled">Habilitado</option>
+          <option value="disabled">Deshabilitado</option>
+        </Select>
+      </Paper>
     </div>
   );
 };
 
-export default Settings;
+export default Configuraciones;
