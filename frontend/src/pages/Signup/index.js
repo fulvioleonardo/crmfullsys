@@ -78,8 +78,8 @@ const SignUp = () => {
   };
 
   const handleWhatsAppClick = () => {
-    const message = encodeURIComponent("Estoy interesado en adquirir el sistema FULLSYS.");
-    window.open(`https://wa.me/?text=${message}`, "_blank");
+    const message = encodeURIComponent("Estoy interesado en el CRM FULLSYS.");
+    window.open(`https://wa.me/573025480682?text=${message}`, "_blank");
   };
 
   return (
@@ -92,7 +92,7 @@ const SignUp = () => {
             <h4 className="h4">⚡ Regístrate</h4>
             <div>
               <span className="span">
-                👋🏻 Comienza tu <b>prueba GRATUITA</b> de 3 días de FULLSYS en
+                👋🏻 Comienza tu <b>prueba GRATUITA</b> de 3 días de FULLSYS CRM en
                 solo 3 pasos! <b>No te preocupes, no pedimos los datos de tu tarjeta.</b> 💳
               </span>
             </div>
@@ -212,7 +212,7 @@ const SignUp = () => {
           <p className="p">
             Copyright ©{" "}
             <a href={"#"} target={"_blank"}>
-              FULLSYS{" "}
+              FULLSYS CRM{" "}
             </a>{" "}
             2025{" "}
           </p>
