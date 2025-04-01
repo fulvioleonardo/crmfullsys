@@ -15,6 +15,7 @@ import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import { InputLabel, MenuItem, Select, FormControl } from "@material-ui/core";
+import WhatsAppIcon from "@material-ui/icons/WhatsApp"; // Import WhatsApp icon
 import usePlans from "../../hooks/usePlans";
 import { i18n } from "../../translate/i18n";
 import { openApi } from "../../services/api";
@@ -76,6 +77,11 @@ const SignUp = () => {
     }
   };
 
+  const handleWhatsAppClick = () => {
+    const message = encodeURIComponent("Estoy interesado en adquirir el sistema FULLSYS.");
+    window.open(`https://wa.me/?text=${message}`, "_blank");
+  };
+
   return (
     <div className="root">
       <div className="container-signup">
@@ -86,7 +92,7 @@ const SignUp = () => {
             <h4 className="h4">⚡ Regístrate</h4>
             <div>
               <span className="span">
-                👋🏻 Comienza tu <b>prueba GRATUITA</b> de 3 días de Z1 en
+                👋🏻 Comienza tu <b>prueba GRATUITA</b> de 3 días de FULLSYS en
                 solo 3 pasos! <b>No te preocupes, no pedimos los datos de tu tarjeta.</b> 💳
               </span>
             </div>
@@ -206,9 +212,9 @@ const SignUp = () => {
           <p className="p">
             Copyright ©{" "}
             <a href={"#"} target={"_blank"}>
-              Z1{" "}
+              FULLSYS{" "}
             </a>{" "}
-            2024{" "}
+            2025{" "}
           </p>
           <p className="p">
             Este sitio está protegido por reCAPTCHA Enterprise y la política de privacidad de Google 
@@ -224,6 +230,25 @@ const SignUp = () => {
         <Box mt={5}>{/* <Copyright /> */}</Box>
       </div>
       <div className={"container-img-signup"}>
+      </div>
+      <div
+        style={{
+          position: "fixed",
+          bottom: "20px",
+          right: "20px",
+          backgroundColor: "#003366", // Royal blue
+          borderRadius: "50%",
+          width: "60px",
+          height: "60px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          cursor: "pointer",
+          boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+        }}
+        onClick={handleWhatsAppClick}
+      >
+        <WhatsAppIcon style={{ color: "white", fontSize: "30px" }} />
       </div>
     </div>
   );
